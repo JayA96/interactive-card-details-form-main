@@ -12,35 +12,14 @@ const yearDisplay = document.getElementById('year-display');
 const cvcInput = document.getElementById('cvc');
 const cvcDisplay = document.getElementById('cvc-display');
 
+const form = document.getElementById('form');
+
 const date = new Date();
 const currentMonth = date.getMonth() + 1;
 const currentYear = Number(date.getFullYear().toString().slice(-2));
 
-// Function which displays numeric input content elsewhere when input is changed
-// HTML uses input type 'text' for maxlength to be used, therefore numeric checking is done in JS
-function numericDisplayInput(inputElement, displayElement, emptyContent, errorElement) {
-    inputElement.addEventListener('input', function () {
-
-        // Remove any existing error
-        document.getElementById(errorElement).style.display = "none";
-        inputElement.classList.remove('invalid');
-
-        // Remove any spaces or non numeric characters input by the user
-        let value = inputElement.value.replace(/[^0-9\s]/g, '');
-        inputElement.value = value;
-
-        // Update the value in the div element
-        if (inputElement.value.length == 0) {
-            displayElement.textContent = emptyContent;
-        } else {
-            displayElement.textContent = inputElement.value;
-        }
-    });
-}
-
 // Due to extra regex replacement for credit card number formatting, a seperate function is written
 numberInput.addEventListener('input', function () {
-
     // Remove any existing error
     document.getElementById('error__number').style.display = "none";
     numberInput.classList.remove('invalid');
@@ -60,7 +39,6 @@ numberInput.addEventListener('input', function () {
 
 
 numberInput.addEventListener('keydown', function (event) {
-
     // Skips any spaces when deleting digits using backspace
     if (event.key === 'Backspace') {
         const inputValue = numberInput.value;
@@ -77,16 +55,8 @@ numberInput.addEventListener('keydown', function (event) {
     }
 });
 
-function formatCreditCardNumber(value) {
-
-    // Adds spaces every 4 digits to format credit card number
-    const formattedValue = value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
-    return formattedValue.trim();
-}
-
 // Name input requires different functionality to check for different characters
 nameInput.addEventListener('input', function () {
-
     // Remove any existing error
     document.getElementById('error__name').style.display = "none";
     nameInput.classList.remove('invalid');
@@ -109,6 +79,39 @@ nameInput.addEventListener('input', function () {
 numericDisplayInput(monthInput, monthDisplay, "00", "error__date");
 numericDisplayInput(yearInput, yearDisplay, "00", "error__date");
 numericDisplayInput(cvcInput, cvcDisplay, "000", "error__cvc");
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    validateForm();
+})
+
+function formatCreditCardNumber(value) {
+    // Adds spaces every 4 digits to format credit card number
+    const formattedValue = value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+    return formattedValue.trim();
+}
+
+// Function which displays numeric input content elsewhere when input is changed
+// HTML uses input type 'text' for maxlength to be used, therefore numeric checking is done in JS
+function numericDisplayInput(inputElement, displayElement, emptyContent, errorElement) {
+    inputElement.addEventListener('input', function () {
+
+        // Remove any existing error
+        document.getElementById(errorElement).style.display = "none";
+        inputElement.classList.remove('invalid');
+
+        // Remove any spaces or non numeric characters input by the user
+        let value = inputElement.value.replace(/[^0-9\s]/g, '');
+        inputElement.value = value;
+
+        // Update the value in the div element
+        if (inputElement.value.length == 0) {
+            displayElement.textContent = emptyContent;
+        } else {
+            displayElement.textContent = inputElement.value;
+        }
+    });
+}
 
 function validateForm() {
     const date = new Date();

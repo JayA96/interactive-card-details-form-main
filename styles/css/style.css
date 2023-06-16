@@ -71,7 +71,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background-size: contain; }
   @media only screen and (max-width: 47.5em) {
     .card__front, .card__back {
-      font-size: 62%; } }
+      font-size: 6.2px; } }
   .card__front > img, .card__back > img {
     visibility: hidden;
     height: 24.5em; }

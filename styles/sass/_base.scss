@@ -128,7 +128,7 @@ input[type="number"]::-webkit-outer-spin-button {
             // This font-size media query resizes the whole card on very small screens
             // All sizes within the card div are em not rem
             // This allows everything in the card to resize at the same time, without affecting the sizing of other elements on the page
-            font-size: 62%;
+            font-size: 6.2px;
         }
         
         &>img {
